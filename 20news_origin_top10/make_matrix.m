@@ -1,10 +1,7 @@
 load('20newsorigin.mat')
-f=fopen('topic')
-topic=textscan(f,'%s');
-topic=topic{1};
 
 idx=zeros(length(gnd),1);
-g =[1,5,7,8,11,12,13,14,15,17];
+g =[3,4,5];
 for i = g
     idx=idx+(gnd==i);
 end
@@ -27,4 +24,4 @@ if sum(fea ~= 0, 2) == 0
     disp('null row exists')
 end
 
-save('20newsorigintop10','fea','gnd','vocab','topic');
+save('20newsorigin2group','fea','gnd','vocab','topic');

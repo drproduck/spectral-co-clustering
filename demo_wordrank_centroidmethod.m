@@ -8,6 +8,7 @@ colormap default
 if exist('20news_origin_top10/20newsorigintop10tfidf.mat', 'file')
     load('20newsorigintop10tfidf')
 else
+    disp('producing tfidf-weighted feature')
     load('20newsorigintop10.mat')
     fea=tfidf(fea,'hard');
     fea=fea./sqrt(sum(fea.^2,2));
@@ -24,7 +25,7 @@ if sum(fea ~= 0, 2) == 0
     disp('null row exists')
 end
 
-r=sum(sum(fea))/(n+m);
+% r=sum(sum(fea))/(n+m);
 [L,D1,D2] = getLaplacian(fea, 1e-100, 'bipartite');
 [u,s,v] = svds(L, nlabel);
 for t=0

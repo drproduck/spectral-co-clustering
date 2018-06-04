@@ -14,13 +14,15 @@ colormap default
 %     save('20news_origin_top10/20newsorigintop10tfidf.mat','fea','gnd','vocab','topic')
 % end
 
-load('20newsorigin.mat')
+load('20newsorigintop10.mat')
 fea=tfidf(fea,'hard');
+fea=norm2(fea);
+
 nlabel=max(gnd);
 [n,m]=size(fea);
 
 % s=sum(sum(fea));
-% r=[s/n,s/m];
+% r=[s/n,s/m]
 % r=[repmat(r(1),n,1);repmat(r(2),m,1)];
 
 tic;
@@ -28,6 +30,7 @@ params.ratio=0.1;
 params.lmda=1;
 params.beven=1;
 fea=getRegularizedBipartite(fea,gnd,params);
+
 fprintf('Took %.2f seconds to create matrix\n',toc)
 
 if sum(fea ~= 0, 1) == 0

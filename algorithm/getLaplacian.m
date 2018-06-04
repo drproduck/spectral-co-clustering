@@ -33,6 +33,7 @@ if strcmp(mode, 'symmetric')
     D = sparse(1:n,1:n,d1.^(-0.5));
     L = D*A*D;
     varargout{1}=d1.^(-0.5);
+    varargout{2}=r;
 
 elseif strcmp(mode, 'bipartite')
     d1 = sum(A, 2)+r(1);
@@ -44,5 +45,6 @@ elseif strcmp(mode, 'bipartite')
     L = D1*A*D2;
     varargout{1}=D1;
     varargout{2}=D2;
+    varargout{3}=r;
 end
 end

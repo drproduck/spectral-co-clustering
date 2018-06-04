@@ -22,10 +22,10 @@ fea=tfidf(fea,'hard');
 % r=[s/n,s/m];
 % r=[repmat(r(1),n,1);repmat(r(2),m,1)];
 
-params.lmda=1;
 params.beven=1;
-for i=0:0.01:0.5
-    params.ratio=i;
+params.ratio=0.05;
+for i=0.1:0.1:5
+    params.lmda=i;
     subfunc(fea,gnd,params);
 end
 
@@ -69,9 +69,12 @@ function subfunc(fea,gnd,params)
     d_label = litekmeans(U, nlabel, 'Distance', 'cosine', 'MaxIter', 100, 'Replicates',10);
     [d_label,map]=bestMap(gnd,d_label);
     figure(1)
+    subplot(121)
     cm=confusionmat(gnd, d_label);
     imagesc(cm)
-    drawnow
     ac=sum(d_label==gnd)/length(gnd);
-    fprintf('known ratio = %.2f, accuracy = %.2f%%, time = %.2f\n', params.ratio, ac*100, toc);
+    fprintf('lambda = %.2f, accuracy = %.2f%%, time = %.2f\n', params.lmda, ac*100, toc);
+    subplot(122)
+    scatter3(U(:,1),U(:,2),U(:,3),3,gnd)
+    drawnow
 end
